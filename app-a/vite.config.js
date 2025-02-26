@@ -17,6 +17,10 @@ export default ({ command }) => ({
       output: {
         entryFileNames: "bundle.js",
         format: "esm",
+        manualChunks: {
+          lodash: ['lodash.merge'],
+          moment: ['moment'],
+        },
       },
     },
   },
