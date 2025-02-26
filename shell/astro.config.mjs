@@ -1,8 +1,17 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import solidJs from "@astrojs/solid-js";
+import cloudflare from "@astrojs/cloudflare";
 
 export default defineConfig({
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+  }),
+  build: {
+    assets: 'assets',
+  },
   integrations: [
     react(),
     solidJs(),
@@ -17,4 +26,16 @@ export default defineConfig({
        }
     },
   ],
+  output: 'server',
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[hash:20].[ext]',
+          chunkFileNames: 'chunks/[hash:20].js',
+          entryFileNames: 'entry/[hash:20].js',
+        },
+      },
+    },
+  },
 });
